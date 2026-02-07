@@ -1,192 +1,58 @@
-# Telegram Crash Game
-[Версия на русском языке 🇷🇺](README.ru.md)
 
-<p align="center">
-  <img src="0824.gif" alt="Demo" width="200"/>
-</p>
+# v0
+v0 is a simple game project.
 
-Fair crash game (Aviator analog) with Telegram and TON wallet integration.
+## Running the Project
 
-## 🚀 Features
+### Prerequisites
 
-- **Fair Play**: All logic runs on the server, transparent seed/crashPoint  
-- **Real-time Sync**: WebSocket-powered gameplay  
-- **Database**: Prisma + PostgreSQL for history and balances  
-- **Telegram Integration**: Authorization via Telegram Web App  
-- **TON Wallet**: TON Connect support  
-- **Admin Panel**: Manage users, games, and withdrawals  
+Make sure you have Node.js and npm installed.
 
-## 🛠 Tech Stack
+### Installation
 
-- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS  
-- **Backend**: Node.js, WebSocket, Redis  
-- **Database**: PostgreSQL, Prisma ORM  
-- **Game Engine**: Phaser 3  
-- **Blockchain**: TON Connect  
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd <project-directory>
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## 📦 Installation
+### Environment Variables
 
-1. **Clone repository**
-```bash
-git clone <repository-url>
-cd telegram-crash-game
-```
-2. **Install dependencies**
+Create a `.env` file in the root of the project and add the necessary environment variables. See `.env.example` for reference.
 
-```
-npm install
-```
-3. **Configure environment variables**
-Fill .env:
-```
-DATABASE_URL="postgresql://user:password@localhost:5432/crash_game"
-BOT_TOKEN="your_bot_token"
-ADMIN_BOT_TOKEN="your_admin_bot_token"
-ADMIN_USER_IDS="123456,789012"
-ADMIN_USERNAMES="admin1,admin2"
-REDIS_URL="redis://localhost:6379"
-NEXT_PUBLIC_WS_URL="ws://localhost:4001"
-```
-4. **Setup database**
+## Available Scripts
 
-```
-npx prisma migrate dev
-npx prisma generate
-```
-### 🚀 Run
- **Development**
-```
-redis-server   # start Redis
-npm run ws     # start WebSocket server
-npm run dev    # start Next.js app
-```
-**Production**
-```
-npm run build
-npm run ws     # WebSocket server
-npm start      # Next.js app
-```
-### 🎮 Gameplay
+- `npm run dev`: Starts the development server for the Next.js app.
+- `npm run build`: Builds the Next.js app for production.
+- `npm run start`: Starts the production server for the Next.js app.
+- `npm run lint`: Lints the code.
+- `npm run ws`: Starts the WebSocket server.
+- `npm run test-ws`: Runs a test script for the WebSocket server.
 
-1. Login via Telegram
-2. Betting phase (6 seconds)
-3. Flight phase (3–6 seconds)
-4. Cashout before crash
-5. Crash → unclaimed bets are lost
+## Production
 
-### 📊 Database Models
-```
-User – players, balances, settings
+To run the project in a production-like environment, you will need to run both the Next.js app and the WebSocket server.
 
-Game – history, bets, results
+1. **Build the Next.js app:**
+   ```bash
+   npm run build
+   ```
+2. **Start the Next.js app:**
+   ```bash
+   npm run start
+   ```
+3. **Start the WebSocket server in a separate terminal:**
+   ```bash
+   npm run ws
+   ```
 
-GameSession – active sessions
+Make sure your environment variables are configured correctly for the production environment.
 
-Transaction – deposits, withdrawals, bets
-
-ChatMessage – chat history
-```
-
-Migrations:
-
-```
-npx prisma migrate dev --name add_new_feature
-npx prisma migrate deploy
-```
-### 🔧 Admin Panel
-Accessible via separate bot for users in ADMIN_USER_IDS.
-
-Features:
-
-**User & balance management**
-**Game & transaction history**
-**Withdraw approvals**
-**System stats**
-
-### 🎯 API Endpoints
-Game API:
-```
-POST /api/game/start – Start a game
-
-POST /api/game/cashout – Cash out
-
-GET /api/profile/games – User’s game history
-```
-Admin API:
-```
-GET /api/admin/users – List users
-
-GET /api/admin/games – All games history
-
-POST /api/admin/withdraw-action – Manage withdrawals
-```
-WebSocket Events:
-
-auth, bet, cashout
-
-game-start, game-flying, game-crash
-
-### 🔒 Security
-Telegram initData validation
-
-Server-side balance checks
-
-Atomic DB transactions
-
-Account blocking
-
-Full logging
-
-### 📈 Monitoring
-Logs:
-
-WebSocket connections
-
-Game events
-
-DB errors
-
-Transactions
-
-Metrics:
-
-Active players
-
-Bets volume
-
-Win/loss stats
-
-#### 🐛 Debugging
-WebSocket test:
-
-```
-curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" \
--H "Host: localhost:4001" -H "Origin: http://localhost:4001" \
-http://localhost:4001
-```
-Database:
-```
-npx prisma studio
-npx prisma validate
-```
-
-## 📝 Roadmap / TODO
-
-- [ ] 🎮 **Demo mode** — allow new users to try the game without real funds  
-- [ ] 🔔 **Telegram notifications** — instant updates and alerts  
-- [ ] ✨ **Win animations** — improve user experience with visual effects  
-- [ ] 🏆 **Tournaments & leaderboards** — competitive gameplay  
-- [ ] 📱 **Mobile optimization** — seamless play on smartphones  
-- [ ] 📊 **Analytics & dashboards** — detailed metrics and insights  
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community!  
-
-1. 🍴 **Fork** this repository  
-2. 🌿 Create a **feature branch**  
-3. 💾 **Commit** your changes  
-4. 🔀 Open a **Pull Request**  
-
+# Triggering a new deploy for Railway
