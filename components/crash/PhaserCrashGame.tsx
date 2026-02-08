@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from 'react'
 
 interface GameState {
@@ -9,7 +11,8 @@ interface GameState {
   crashTime?: number;
 }
 
-const WS_URL = 'ws://localhost:4001';
+// Use environment variable for WebSocket URL, with a fallback for local development
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4001';
 
 export default function PhaserCrashGame() {
   const [gameState, setGameState] = useState<GameState>({ phase: 'betting' });
@@ -59,6 +62,7 @@ export default function PhaserCrashGame() {
 
   // ws
   useEffect(() => {
+    console.log(`[PhaserCrashGame] Connecting to WS at ${WS_URL}`);
     const ws = new window.WebSocket(WS_URL);
     wsRef.current = ws;
     ws.onopen = () => {
@@ -91,4 +95,4 @@ export default function PhaserCrashGame() {
       <div className="text-sm mt-2">Session: {gameState.sessionId}</div>
     </div>
   );
-} 
+}
